@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Memory Scroll – Level 37</title>
+
+<style>
+body{
+margin:0;
+background:#0a0a0a;
+font-family:'Segoe UI',sans-serif;
+overflow:hidden;
+color:white;
+}
+
+/* Countdown */
+.countdown{
+position:fixed;
+top:20px;
+width:100%;
+text-align:center;
+font-size:48px;
+font-weight:bold;
+color:#ff8c00;
+letter-spacing:3px;
+z-index:20;
+text-shadow:0 0 20px rgba(255,140,0,0.6);
+}
+
+/* Naruto floating icons */
+.naruto{
+position:absolute;
+width:40px;
+opacity:0;
+animation: floatNaruto 8s infinite ease-in-out;
+}
+
+@keyframes floatNaruto{
+0%{opacity:0; transform:translateY(0px);}
+50%{opacity:0.4;}
+100%{opacity:0; transform:translateY(-80px);}
+}
+
+/* Card container */
+.container{
+position:absolute;
+top:120px;
+width:100%;
+height:80%;
+}
+
+/* Flip Card */
+.card{
+width:220px;
+height:280px;
+position:absolute;
+perspective:1000px;
+cursor:pointer;
+}
+
+.card-inner{
+width:100%;
+height:100%;
+position:relative;
+transition:transform 0.8s;
+transform-style:preserve-3d;
+}
+
+.card.flipped .card-inner{
+transform:rotateY(180deg);
+}
+
+.card-front, .card-back{
+position:absolute;
+width:100%;
+height:100%;
+backface-visibility:hidden;
+border-radius:15px;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
+text-align:center;
+box-shadow:0 10px 30px rgba(255,140,0,0.3);
+}
+
+.card-front{
+background:linear-gradient(135deg,#ff8c00,#ff4500);
+font-weight:bold;
+}
+
+.card-back{
+background:#111;
+transform:rotateY(180deg);
+}
+
+.card-back img{
+max-width:100%;
+max-height:100%;
+border-radius:10px;
+}
+
+/* Locked Surprise */
+.locked{
+opacity:0.5;
+pointer-events:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="countdown">7 DAYS TO GO</div>
+
+<!-- Naruto floating avatars -->
+<script>
+for(let i=0;i<15;i++){
+let img=document.createElement("img");
+img.src="naruto.png"; // Replace with Naruto PNG link
+img.className="naruto";
+img.style.left=Math.random()*100+"vw";
+img.style.top=Math.random()*100+"vh";
+img.style.animationDelay=Math.random()*5+"s";
+document.body.appendChild(img);
+}
+</script>
+
+<div class="container" id="cardContainer"></div>
+
+<!-- Naruto Background Music -->
+<audio autoplay loop>
+<source src="naruto-theme.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+let flippedCount=0;
+
+const memories=[
+{front:"Do you remember what we ate the first in Berlin ?🍜",
+back:"first meal.jpg"},
+{front:"24 Feb 2021, we were still figuring our likes, i'm not a pro yet 🎁",
+back:"First gift.jpg"},
+{front:"24 Feb 2021 – I bet you don't remember this 💛",
+back:"birthday 2021.jpg"},
+{front:"24 Feb 2022 – Birthday with my painful ass, Prague 🍻",
+back:"birthday 2022.jpg"},
+{front:"24 Feb 2023 – It was my day more than ours, Masked up for my 30th glow ✨",
+back:"birthday 2023.jpg"},
+{front:"24 Feb 2024 – Just us, lots of nature & naked Sauna, the best one 🖤",
+back:"birthday 2024.jpg"},
+{front:"24 Feb 2025 – Office, no plans but big smiles & louder laughs 😌",
+back:"birthday 2025.jpg"}
+];
+
+const container=document.getElementById("cardContainer");
+
+/* Random placement */
+memories.forEach((mem,index)=>{
+createCard(mem.front,mem.back,false);
+});
+
+/* Surprise card */
+createCard("Flip to know your birthday surprise 😈","surprise.gif",true);
+
+function createCard(frontText,backImage,isSurprise){
+let card=document.createElement("div");
+card.className="card";
+card.style.left=Math.random()*80+"vw";
+card.style.top=Math.random()*60+"vh";
+
+let inner=document.createElement("div");
+inner.className="card-inner";
+
+let front=document.createElement("div");
+front.className="card-front";
+front.innerText=frontText;
+
+let back=document.createElement("div");
+back.className="card-back";
+
+if(isSurprise){
+back.innerHTML="<img src='surprise.gif'>";
+card.classList.add("locked");
+}else{
+back.innerHTML="<img src='"+backImage+"'>";
+}
+
+inner.appendChild(front);
+inner.appendChild(back);
+card.appendChild(inner);
+container.appendChild(card);
+
+card.addEventListener("click",()=>{
+if(isSurprise && flippedCount<memories.length){
+return;
+}
+card.classList.toggle("flipped");
+if(!isSurprise && card.classList.contains("flipped")){
+flippedCount++;
+if(flippedCount===memories.length){
+document.querySelectorAll(".card")[memories.length].classList.remove("locked");
+}
+}
+});
+}
+</script>
+
+</body>
+</html>
