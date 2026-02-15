@@ -47,7 +47,16 @@ position:absolute;
 top:120px;
 width:100%;
 height:80%;
+display:grid;
+grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+gap:40px;
+padding:40px;
+justify-items:center;
+align-items:center;
 }
+
+
+
 
 /* Flip Card */
 .card{
@@ -165,8 +174,6 @@ createCard("Flip to know your birthday surprise 😈","surprise.gif",true);
 function createCard(frontText,backImage,isSurprise){
 let card=document.createElement("div");
 card.className="card";
-card.style.left=Math.random()*80+"vw";
-card.style.top=Math.random()*60+"vh";
 
 let inner=document.createElement("div");
 inner.className="card-inner";
