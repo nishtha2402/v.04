@@ -46,16 +46,13 @@ pointer-events:none;
 
 /* Card container */
 .container{
-position:absolute;
-top:120px;
+position:relative;
 width:100%;
-height:80%;
 display:grid;
-grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 gap:40px;
-padding:40px;
-justify-items:center;
-align-items:center;
+padding:140px 40px 80px 40px;
+box-sizing:border-box;
 }
 
 
@@ -63,23 +60,25 @@ align-items:center;
 
 /* Flip Card */
 .card{
-width:320px;        /* bigger */
-aspect-ratio: 4 / 5; /* better for portraits */
+width:100%;
+max-width:320px;
+height:420px;
 perspective:1000px;
 cursor:pointer;
+margin:0 auto;
 }
 
 
 .card-inner{
+position:relative;
 width:100%;
 height:100%;
-position:relative;
-transition:transform 0.8s;
-transform-style:preserve-3d;
+transition: transform 0.8s;
+transform-style: preserve-3d;
 }
 
 .card.flipped .card-inner{
-transform:rotateY(180deg);
+transform: rotateY(180deg);
 }
 
 .card-front, .card-back{
@@ -87,26 +86,29 @@ position:absolute;
 width:100%;
 height:100%;
 backface-visibility:hidden;
-border-radius:15px;
-display:flex;
-justify-content:center;
-align-items:center;
-padding:20px;
-text-align:center;
-box-shadow:0 10px 30px rgba(255,140,0,0.3);
+border-radius:20px;
 overflow:hidden;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:20px;
+box-sizing:border-box;
 }
 
 .card-front{
-background:linear-gradient(135deg,#ff8c00,#ff4500);
-font-weight:bold;
+background:#111;
+color:#ffae00;
+text-align:center;
+font-size:18px;
 }
 
-.card-back{
-background:#111;
-transform:rotateY(180deg);
-padding:0;
+.card-back img{
+width:100%;
+height:100%;
+object-fit:contain;
 }
+
+
 
 .card-back img{
 width:100%;
